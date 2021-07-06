@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:paddingTop="16dp">
+
+
+        <!--  Title  -->
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:text="@string/title"
+            android:textSize="24sp" />
+
+        <!--  Name  -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/name"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:hint="@string/name"
+            app:endIconMode="clear_text">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLines="1" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <!--  Last Name  -->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/last_name"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:hint="@string/last_name"
+            app:endIconMode="clear_text">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLines="1" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="4dp"
+            android:text="@string/date_of_birth" />
+
+        <DatePicker
+            android:id="@+id/date_of_birth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner"
+            android:spinnersShown="true" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/city_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:hint="@string/city"
+            app:startIconDrawable="@drawable/location">
+
+            <AutoCompleteTextView
+                android:id="@+id/city_selection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <!--        gender-->
+        <TextView
+            android:id="@+id/genderText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_marginTop="20dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:text="@string/gender" />
+
+        <RadioGroup
+            android:id="@+id/gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="4dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/genderMale"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="32dp"
+                android:layout_weight="1"
+                android:hint="@string/gender_male" />
+
+            <RadioButton
+                android:id="@+id/genderFemale"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="32dp"
+                android:layout_weight="1"
+                android:hint="@string/gender_female" />
+
+            <RadioButton
+                android:id="@+id/genderOther"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/gender_other" />
+        </RadioGroup>
+        <!--        vaccinetype-->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/vaccine_type"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:hint="@string/vaccine_type"
+            app:startIconDrawable="@drawable/medical">
+
+            <AutoCompleteTextView
+                android:id="@+id/vaccine_type_selection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--        side-->
+        <!--        confirmation-->
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/side_effects"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:hint="@string/side_effects"
+            app:boxBackgroundMode="outline"
+            app:counterEnabled="true"
+            app:counterMaxLength="200"
+            app:endIconMode="clear_text">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:lines="5" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/submitButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="#266BD3"
+            android:text="SUBMIT" />
+
+        <TextView
+            android:id="@+id/resultMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:text=""
+            />
+    </LinearLayout>
+</ScrollView>
