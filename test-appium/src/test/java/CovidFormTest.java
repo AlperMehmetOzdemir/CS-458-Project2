@@ -2,14 +2,13 @@ import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.touch.TouchActions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -65,17 +64,7 @@ public class CovidFormTest {
         action = new TouchAction(driver);
     }
 
-    @Test(enabled = true)
-    public void basicTest() throws InterruptedException {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(nameInputBy)).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(nameInputBy)).sendKeys("Mehmet");
-
-        String nameInputStr = wait.until(ExpectedConditions.visibilityOfElementLocated(nameInputBy)).getText();
-        Assert.assertTrue(nameInputStr.toLowerCase(Locale.ROOT).contains("mehmet"));
-
-    }
-
-    @Test(enabled = false, description = "At most one radio button (initially zero) for a radio button group should be checked at any time.")
+    @Test(enabled = true, description = "At most one radio button (initially zero) for a radio button group should be checked at any time.")
     public void radioButtonTest() throws InterruptedException {
         Reporter.log("[Test-Case 1] - At most one radio button (initially zero) for a radio button group should be checked at any time.", true);
         // Check that initially no radio buttons are selected
@@ -335,11 +324,11 @@ public class CovidFormTest {
         scrollDown();
         Assert.assertEquals(wait.until(ExpectedConditions.visibilityOfElementLocated(resultMessageBy)).getText(),
                 "Please check the information you provided",
-                "Correct invalid submission message was not show");
+                "Correct invalid submission message was not shown");
 
     }
 
-    @Test(enabled = false, description = "City and Vaccine Type should only accept input from a predefined list and clear itself on unrecognized input")
+    @Test(enabled = true, description = "City and Vaccine Type should only accept input from a predefined list and clear itself on unrecognized input")
     public void autoCompleteInputTest() throws InterruptedException {
         Reporter.log("[Test-Case 3] City and Vaccine Type should only accept input from a predefined list", true);
 
@@ -442,6 +431,90 @@ public class CovidFormTest {
                 "Vaccine selection should be empty");
         driver.hideKeyboard();
 
+    }
+
+    @Test(enabled = true, description = "User should be able to take a screenshot")
+    public void screenshotTest() {
+        Reporter.log("[Test-Case 4] User should be able to take a screenshot", true);
+        File screenShot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+
+        Assert.assertNotEquals(screenShot, null, "User should be able to take a screenshot");
+    }
+
+    @Test(enabled = true, description = "Name and surname should consist of only space/s or characters. ")
+    public void charSpaceTest() throws InterruptedException {
+        Reporter.log("[Test-Case 5] - Name and surname should consist of only space/s or characters. ", true);
+
+        // Check that initially name and surname are enabled
+        Reporter.log("[Test-Case 5.1] Name and surname should be enabled and clickable", true);
+        Assert.assertEquals(wait.until(ExpectedConditions.visibilityOfElementLocated(nameInputBy)).getAttribute("enabled"),
+                "true",
+                "[Test-Case 5.1] Name should be enabled");
+        Assert.assertEquals(wait.until(ExpectedConditions.visibilityOfElementLocated(lastNameInputBy)).getAttribute("enabled"),
+                "true",
+                "[Test-Case 5.1] Last name should be enabled");
+
+        //clickable part
+        Assert.assertEquals(wait.until(ExpectedConditions.visibilityOfElementLocated(nameInputBy)).getAttribute("clickable"),
+                "true",
+                "[Test-Case 5.1] Name part should be clickable");
+        Assert.assertEquals(wait.until(ExpectedConditions.visibilityOfElementLocated(lastNameInputBy)).getAttribute("clickable"),
+                "true",
+                "[Test-Case 5.1] Last name part should be clickable");
+
+
+        // Successful submission
+        Reporter.log("[Test-Case 5.2] For Name and Last name an approval message should be shown with valid  submission", true);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(nameInputBy)).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(nameInputBy)).sendKeys("abcd abc"); //input with character and space
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(lastNameInputBy)).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(lastNameInputBy)).sendKeys("abcd");
+
+        driver.hideKeyboard();
+        scrollDown();
+        scrollDown();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(citySelectionBy)).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(citySelectionBy)).sendKeys("Ankara");
+
+        driver.hideKeyboard();
+        scrollDown();
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(maleRadioBy)).click();
+
+
+        scrollDown();
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(vaccineSelectionBy)).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(vaccineSelectionBy)).sendKeys("Pfizer-BionTech");
+
+        driver.hideKeyboard();
+        scrollDown();
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(submitButtonBy)).click();
+
+        scrollDown();
+        Assert.assertEquals(wait.until(ExpectedConditions.visibilityOfElementLocated(resultMessageBy)).getText(),
+                "Form saved successfully",
+                "Correct valid submission message was not shown");
+
+
+        // Unsuccesful submission
+        scrollUp();
+        scrollUp();
+        Reporter.log("[Test-Case 5.3] For Name and Last name an invalid submission message should be shown with invalid form submission", true);
+
+        //numerical invalid form for name
+        wait.until(ExpectedConditions.visibilityOfElementLocated(nameInputBy)).clear();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(nameInputBy)).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(nameInputBy)).sendKeys("123");
+
+        driver.hideKeyboard();
+        scrollDown();
+
+        wait.until(ExpectedConditions.visibilityOfElementLocated(lastNameInputBy)).clear();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(lastNameInputBy)).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(lastNameInputBy)).sendKeys("abcd");
     }
 
     @AfterMethod
